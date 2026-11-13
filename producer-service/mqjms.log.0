@@ -1,0 +1,209 @@
+Date: Wed Nov 11 19:39:50 EAT 2026
+MQ Build Level=X.X.X(p1001-L260922)
+Java version: 25.0.5(25.0.5+8-LTS)
+Process ID: 6348
+--------------------------------------------------------------------
+November 11, 2026, 7:39:50 PM EAT[http-nio-8080-exec-1] com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection
+The TCP.ClntSndBuffSize property is not set in either mqclient.ini or the JVM system properties, so the network layer is using a TCP send buffer size of 65,536 bytes.
+
+EXPLANATION:
+Because the TCP.ClntSndBuffSize property is not configured, the IBM MQ messaging client will not set the send buffer size. The network layer will choose the send buffer size instead.
+
+ACTION:
+None.
+--------------------------------------------------------------------
+November 11, 2026, 7:39:50 PM EAT[http-nio-8080-exec-1] com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection
+The TCP.ClntRcvBuffSize property is not set in either mqclient.ini or the JVM system properties, so the network layer is using a TCP receive buffer size of 65,536 bytes.
+
+EXPLANATION:
+Because the TCP.ClntRcvBuffSize property is not configured, the IBM MQ messaging client will not set the receive buffer size. The network layer will choose the receive buffer size instead.
+
+ACTION:
+None.
+--------------------------------------------------------------------
+November 11, 2026, 7:41:39 PM EAT[DispatchThread: [com.ibm.mq.jmqi.remote.impl.RemoteSession[:/499e5ca3][connectionId=414D5143514D31202020202020202020FD98F46A002B0040,traceIdentifier=1,remoteTraceIdentifier=-1]], [MQ Build Level=X.X.X(p1001-L260922)]] com.ibm.msg.client.jakarta.jms.internal.JmsProviderExceptionListener
+An exception has been delivered to the connection's exception listener: '
+                       Message : com.ibm.msg.client.jakarta.jms.DetailedJMSException: JMSWMQ1107: A problem with this connection has occurred.
+An error has occurred with the IBM MQ JMS connection.
+Use the linked exception to determine the cause of this error.
+                         Class : class com.ibm.msg.client.jakarta.jms.DetailedJMSException
+                         Stack : com.ibm.msg.client.jakarta.wmq.common.internal.Reason.reasonToException(Reason.java:709)
+                               : com.ibm.msg.client.jakarta.wmq.common.internal.Reason.createException(Reason.java:229)
+                               : com.ibm.msg.client.jakarta.wmq.internal.WMQConnection.consumer(WMQConnection.java:986)
+                               : com.ibm.mq.jmqi.remote.api.RemoteHconn.callEventHandler(RemoteHconn.java:3043)
+                               : com.ibm.mq.jmqi.remote.api.RemoteHconn.driveEventsEH(RemoteHconn.java:715)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteDispatchThread.processHconn(RemoteDispatchThread.java:693)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteDispatchThread.run(RemoteDispatchThread.java:223)
+                               : com.ibm.msg.client.commonservices.workqueue.WorkQueueItem.runTask(WorkQueueItem.java:338)
+                               : com.ibm.msg.client.commonservices.workqueue.SimpleWorkQueueItem.runItem(SimpleWorkQueueItem.java:99)
+                               : com.ibm.msg.client.commonservices.workqueue.WorkQueueItem.run(WorkQueueItem.java:362)
+                               : com.ibm.msg.client.commonservices.workqueue.WorkQueueManager.runWorkQueueItem(WorkQueueManager.java:312)
+                               : com.ibm.msg.client.commonservices.j2se.workqueue.WorkQueueManagerImplementation$ThreadPoolWorker.run(WorkQueueManagerImplementation.java:1248)
+     Caused by [1] --> Message : com.ibm.mq.MQException: JMSCMQ0001: IBM MQ call failed with compcode '2' ('MQCC_FAILED') reason '2009' ('MQRC_CONNECTION_BROKEN').
+                         Class : class com.ibm.mq.MQException
+                         Stack : com.ibm.msg.client.jakarta.wmq.common.internal.Reason.createException(Reason.java:217)
+                               : com.ibm.msg.client.jakarta.wmq.internal.WMQConnection.consumer(WMQConnection.java:986)
+                               : com.ibm.mq.jmqi.remote.api.RemoteHconn.callEventHandler(RemoteHconn.java:3043)
+                               : com.ibm.mq.jmqi.remote.api.RemoteHconn.driveEventsEH(RemoteHconn.java:715)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteDispatchThread.processHconn(RemoteDispatchThread.java:693)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteDispatchThread.run(RemoteDispatchThread.java:223)
+                               : com.ibm.msg.client.commonservices.workqueue.WorkQueueItem.runTask(WorkQueueItem.java:338)
+                               : com.ibm.msg.client.commonservices.workqueue.SimpleWorkQueueItem.runItem(SimpleWorkQueueItem.java:99)
+                               : com.ibm.msg.client.commonservices.workqueue.WorkQueueItem.run(WorkQueueItem.java:362)
+                               : com.ibm.msg.client.commonservices.workqueue.WorkQueueManager.runWorkQueueItem(WorkQueueManager.java:312)
+                               : com.ibm.msg.client.commonservices.j2se.workqueue.WorkQueueManagerImplementation$ThreadPoolWorker.run(WorkQueueManagerImplementation.java:1248)
+'.
+
+EXPLANATION:
+null
+
+ACTION:
+Review the exception details for further information.
+--------------------------------------------------------------------
+Date: Wed Nov 11 20:16:10 EAT 2026
+MQ Build Level=X.X.X(p1001-L260922)
+Java version: 27(27+35-2325)
+Process ID: 15180
+--------------------------------------------------------------------
+November 11, 2026, 8:16:10 PM EAT[http-nio-8080-exec-1] com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection
+The TCP.ClntSndBuffSize property is not set in either mqclient.ini or the JVM system properties, so the network layer is using a TCP send buffer size of 65,536 bytes.
+
+EXPLANATION:
+Because the TCP.ClntSndBuffSize property is not configured, the IBM MQ messaging client will not set the send buffer size. The network layer will choose the send buffer size instead.
+
+ACTION:
+None.
+--------------------------------------------------------------------
+November 11, 2026, 8:16:10 PM EAT[http-nio-8080-exec-1] com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection
+The TCP.ClntRcvBuffSize property is not set in either mqclient.ini or the JVM system properties, so the network layer is using a TCP receive buffer size of 65,536 bytes.
+
+EXPLANATION:
+Because the TCP.ClntRcvBuffSize property is not configured, the IBM MQ messaging client will not set the receive buffer size. The network layer will choose the receive buffer size instead.
+
+ACTION:
+None.
+--------------------------------------------------------------------
+November 11, 2026, 8:44:24 PM EAT[DispatchThread: [com.ibm.mq.jmqi.remote.impl.RemoteSession[:/3caa19b2][connectionId=414D5143514D312020202020202020202AA2F46A002C0040,traceIdentifier=1,remoteTraceIdentifier=-1]], [MQ Build Level=X.X.X(p1001-L260922)]] com.ibm.msg.client.jakarta.jms.internal.JmsProviderExceptionListener
+An exception has been delivered to the connection's exception listener: '
+                       Message : com.ibm.msg.client.jakarta.jms.DetailedJMSException: JMSWMQ1107: A problem with this connection has occurred.
+An error has occurred with the IBM MQ JMS connection.
+Use the linked exception to determine the cause of this error.
+                         Class : class com.ibm.msg.client.jakarta.jms.DetailedJMSException
+                         Stack : com.ibm.msg.client.jakarta.wmq.common.internal.Reason.reasonToException(Reason.java:709)
+                               : com.ibm.msg.client.jakarta.wmq.common.internal.Reason.createException(Reason.java:229)
+                               : com.ibm.msg.client.jakarta.wmq.internal.WMQConnection.consumer(WMQConnection.java:986)
+                               : com.ibm.mq.jmqi.remote.api.RemoteHconn.callEventHandler(RemoteHconn.java:3043)
+                               : com.ibm.mq.jmqi.remote.api.RemoteHconn.driveEventsEH(RemoteHconn.java:715)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteDispatchThread.processHconn(RemoteDispatchThread.java:693)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteDispatchThread.run(RemoteDispatchThread.java:223)
+                               : com.ibm.msg.client.commonservices.workqueue.WorkQueueItem.runTask(WorkQueueItem.java:338)
+                               : com.ibm.msg.client.commonservices.workqueue.SimpleWorkQueueItem.runItem(SimpleWorkQueueItem.java:99)
+                               : com.ibm.msg.client.commonservices.workqueue.WorkQueueItem.run(WorkQueueItem.java:362)
+                               : com.ibm.msg.client.commonservices.workqueue.WorkQueueManager.runWorkQueueItem(WorkQueueManager.java:312)
+                               : com.ibm.msg.client.commonservices.j2se.workqueue.WorkQueueManagerImplementation$ThreadPoolWorker.run(WorkQueueManagerImplementation.java:1248)
+     Caused by [1] --> Message : com.ibm.mq.MQException: JMSCMQ0001: IBM MQ call failed with compcode '2' ('MQCC_FAILED') reason '2009' ('MQRC_CONNECTION_BROKEN').
+                         Class : class com.ibm.mq.MQException
+                         Stack : com.ibm.msg.client.jakarta.wmq.common.internal.Reason.createException(Reason.java:217)
+                               : com.ibm.msg.client.jakarta.wmq.internal.WMQConnection.consumer(WMQConnection.java:986)
+                               : com.ibm.mq.jmqi.remote.api.RemoteHconn.callEventHandler(RemoteHconn.java:3043)
+                               : com.ibm.mq.jmqi.remote.api.RemoteHconn.driveEventsEH(RemoteHconn.java:715)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteDispatchThread.processHconn(RemoteDispatchThread.java:693)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteDispatchThread.run(RemoteDispatchThread.java:223)
+                               : com.ibm.msg.client.commonservices.workqueue.WorkQueueItem.runTask(WorkQueueItem.java:338)
+                               : com.ibm.msg.client.commonservices.workqueue.SimpleWorkQueueItem.runItem(SimpleWorkQueueItem.java:99)
+                               : com.ibm.msg.client.commonservices.workqueue.WorkQueueItem.run(WorkQueueItem.java:362)
+                               : com.ibm.msg.client.commonservices.workqueue.WorkQueueManager.runWorkQueueItem(WorkQueueManager.java:312)
+                               : com.ibm.msg.client.commonservices.j2se.workqueue.WorkQueueManagerImplementation$ThreadPoolWorker.run(WorkQueueManagerImplementation.java:1248)
+'.
+
+EXPLANATION:
+null
+
+ACTION:
+Review the exception details for further information.
+--------------------------------------------------------------------
+Date: Fri Nov 13 13:07:48 EAT 2026
+MQ Build Level=X.X.X(p1001-L260922)
+Java version: 26.0.2(26.0.2+10-FR)
+Process ID: 16328
+--------------------------------------------------------------------
+November 13, 2026, 1:07:48 PM EAT[http-nio-8081-exec-1] com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection
+The TCP.ClntSndBuffSize property is not set in either mqclient.ini or the JVM system properties, so the network layer is using a TCP send buffer size of 65,536 bytes.
+
+EXPLANATION:
+Because the TCP.ClntSndBuffSize property is not configured, the IBM MQ messaging client will not set the send buffer size. The network layer will choose the send buffer size instead.
+
+ACTION:
+None.
+--------------------------------------------------------------------
+November 13, 2026, 1:07:48 PM EAT[http-nio-8081-exec-1] com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection
+The TCP.ClntRcvBuffSize property is not set in either mqclient.ini or the JVM system properties, so the network layer is using a TCP receive buffer size of 65,536 bytes.
+
+EXPLANATION:
+Because the TCP.ClntRcvBuffSize property is not configured, the IBM MQ messaging client will not set the receive buffer size. The network layer will choose the receive buffer size instead.
+
+ACTION:
+None.
+--------------------------------------------------------------------
+November 13, 2026, 1:09:25 PM EAT[DispatchThread: [com.ibm.mq.jmqi.remote.impl.RemoteSession[:/5115dd1d][connectionId=414D5143514D312020202020202020204BE0F66A002A0040,traceIdentifier=1,remoteTraceIdentifier=-1]], [MQ Build Level=X.X.X(p1001-L260922)]] com.ibm.msg.client.jakarta.jms.internal.JmsProviderExceptionListener
+An exception has been delivered to the connection's exception listener: '
+                       Message : com.ibm.msg.client.jakarta.jms.DetailedJMSException: JMSWMQ1107: A problem with this connection has occurred.
+An error has occurred with the IBM MQ JMS connection.
+Use the linked exception to determine the cause of this error.
+                         Class : class com.ibm.msg.client.jakarta.jms.DetailedJMSException
+                         Stack : com.ibm.msg.client.jakarta.wmq.common.internal.Reason.reasonToException(Reason.java:709)
+                               : com.ibm.msg.client.jakarta.wmq.common.internal.Reason.createException(Reason.java:229)
+                               : com.ibm.msg.client.jakarta.wmq.internal.WMQConnection.consumer(WMQConnection.java:986)
+                               : com.ibm.mq.jmqi.remote.api.RemoteHconn.callEventHandler(RemoteHconn.java:3043)
+                               : com.ibm.mq.jmqi.remote.api.RemoteHconn.driveEventsEH(RemoteHconn.java:715)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteDispatchThread.processHconn(RemoteDispatchThread.java:693)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteDispatchThread.run(RemoteDispatchThread.java:223)
+                               : com.ibm.msg.client.commonservices.workqueue.WorkQueueItem.runTask(WorkQueueItem.java:338)
+                               : com.ibm.msg.client.commonservices.workqueue.SimpleWorkQueueItem.runItem(SimpleWorkQueueItem.java:99)
+                               : com.ibm.msg.client.commonservices.workqueue.WorkQueueItem.run(WorkQueueItem.java:362)
+                               : com.ibm.msg.client.commonservices.workqueue.WorkQueueManager.runWorkQueueItem(WorkQueueManager.java:312)
+                               : com.ibm.msg.client.commonservices.j2se.workqueue.WorkQueueManagerImplementation$ThreadPoolWorker.run(WorkQueueManagerImplementation.java:1248)
+     Caused by [1] --> Message : com.ibm.mq.MQException: JMSCMQ0001: IBM MQ call failed with compcode '2' ('MQCC_FAILED') reason '2009' ('MQRC_CONNECTION_BROKEN').
+                         Class : class com.ibm.mq.MQException
+                         Stack : com.ibm.msg.client.jakarta.wmq.common.internal.Reason.createException(Reason.java:217)
+                               : com.ibm.msg.client.jakarta.wmq.internal.WMQConnection.consumer(WMQConnection.java:986)
+                               : com.ibm.mq.jmqi.remote.api.RemoteHconn.callEventHandler(RemoteHconn.java:3043)
+                               : com.ibm.mq.jmqi.remote.api.RemoteHconn.driveEventsEH(RemoteHconn.java:715)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteDispatchThread.processHconn(RemoteDispatchThread.java:693)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteDispatchThread.run(RemoteDispatchThread.java:223)
+                               : com.ibm.msg.client.commonservices.workqueue.WorkQueueItem.runTask(WorkQueueItem.java:338)
+                               : com.ibm.msg.client.commonservices.workqueue.SimpleWorkQueueItem.runItem(SimpleWorkQueueItem.java:99)
+                               : com.ibm.msg.client.commonservices.workqueue.WorkQueueItem.run(WorkQueueItem.java:362)
+                               : com.ibm.msg.client.commonservices.workqueue.WorkQueueManager.runWorkQueueItem(WorkQueueManager.java:312)
+                               : com.ibm.msg.client.commonservices.j2se.workqueue.WorkQueueManagerImplementation$ThreadPoolWorker.run(WorkQueueManagerImplementation.java:1248)
+'.
+
+EXPLANATION:
+null
+
+ACTION:
+Review the exception details for further information.
+--------------------------------------------------------------------
+Date: Fri Nov 13 13:20:49 EAT 2026
+MQ Build Level=X.X.X(p1001-L260922)
+Java version: 26.0.2(26.0.2+10-FR)
+Process ID: 18288
+--------------------------------------------------------------------
+November 13, 2026, 1:20:50 PM EAT[http-nio-8081-exec-3] com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection
+The TCP.ClntSndBuffSize property is not set in either mqclient.ini or the JVM system properties, so the network layer is using a TCP send buffer size of 65,536 bytes.
+
+EXPLANATION:
+Because the TCP.ClntSndBuffSize property is not configured, the IBM MQ messaging client will not set the send buffer size. The network layer will choose the send buffer size instead.
+
+ACTION:
+None.
+--------------------------------------------------------------------
+November 13, 2026, 1:20:50 PM EAT[http-nio-8081-exec-3] com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection
+The TCP.ClntRcvBuffSize property is not set in either mqclient.ini or the JVM system properties, so the network layer is using a TCP receive buffer size of 65,536 bytes.
+
+EXPLANATION:
+Because the TCP.ClntRcvBuffSize property is not configured, the IBM MQ messaging client will not set the receive buffer size. The network layer will choose the receive buffer size instead.
+
+ACTION:
+None.
+--------------------------------------------------------------------

@@ -1,0 +1,31 @@
+services:
+  mq:
+    image: icr.io/ibm-messaging/mq:9.4.0.5-r2
+    environment:
+      LICENSE: accept
+      MQ_QMGR_NAME: QM1
+      MQ_DEV: "true"
+      MQ_ENABLE_EMBEDDED_WEB_SERVER: "true"
+    ports:
+      - "1414:1414"
+      - "9443:9443"
+    secrets:
+      - mqAppPassword
+      - mqAdminPassword
+    volumes:
+      - mq-data:/mnt/mqm
+    healthcheck:
+      test: ["CMD", "chkmqready"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+secrets:
+  mqAdminPassword:
+    file: ./docker/admin-password.txt
+  mqAppPassword:
+    file: ./docker/app-password.txt
+
+volumes:
+  mq-data:

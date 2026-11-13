@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: consumer-service
+  main:
+    web-application-type: none
+    banner-mode: "off"
+ibm:
+  mq:
+    queueManager: QM1
+    channel: DEV.APP.SVRCONN
+    connName: localhost(1414)
+    user: app
+    password: passw0rd
+app:
+  queue: DEV.QUEUE.1
+
+logging:
+  pattern:
+    console: "%d{HH:mm:ss} [%-5level] %msg%n"
+  level:
+    root: WARN
+    com.example: INFO

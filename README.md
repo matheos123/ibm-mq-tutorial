@@ -3,8 +3,8 @@
 Learn how two Spring Boot applications communicate asynchronously through a real IBM MQ queue.
 
 ```text
-HTTP request -> producer-service -> IBM MQ: DEV.QUEUE.1 -> consumer-service -> log
-                 localhost:8080      localhost:1414
+HTTP request -> producer-service -> IBM MQ: Sendly -> consumer-service -> log
+                 localhost:8081      localhost:1414
 ```
 
 The producer accepts plain text at `POST /api/messages` and sends a JMS text message using `JmsTemplate`. IBM MQ stores the message until the consumer's `@JmsListener` receives it and logs its contents. The HTTP response confirms that MQ accepted the message; it does not wait for the consumer to process it.
@@ -66,13 +66,13 @@ Open two terminals in the project root. Leave each application running in its te
 **Terminal 1 — consumer:**
 
 ```powershell
-.\mvnw.cmd -pl consumer-service spring-boot:run
+.\mvnw.cmd -q -pl consumer-service spring-boot:run
 ```
 
 **Terminal 2 — producer:**
 
 ```powershell
-.\mvnw.cmd -pl producer-service spring-boot:run
+.\mvnw.cmd -q -pl producer-service spring-boot:run
 ```
 
 On macOS/Linux/Git Bash, the equivalent commands are:
@@ -95,33 +95,66 @@ Each service also includes its own wrapper. If your terminal is already inside `
 
 Open a third terminal in the project root.
 
-**Windows PowerShell** — use `curl.exe` to avoid the older PowerShell curl alias:
+### Option A: Send a Structured JSON Message (Recommended)
 
 ```powershell
-curl.exe -i -X POST http://localhost:8080/api/messages -H "Content-Type: text/plain" --data "Hello IBM MQ!"
+curl.exe -i -X POST http://localhost:8081/api/messages `
+  -H "Content-Type: application/json" `
+  -d '{\"sender\":\"Alice\",\"content\":\"Deployment order #42\",\"priority\":\"HIGH\"}'
 ```
 
-**macOS/Linux/Git Bash:**
-
+On Linux/macOS/Git Bash:
 ```sh
-curl -i -X POST http://localhost:8080/api/messages -H 'Content-Type: text/plain' --data 'Hello IBM MQ!'
+curl -i -X POST http://localhost:8081/api/messages \
+  -H "Content-Type: application/json" \
+  -d '{"sender":"Alice","content":"Deployment order #42","priority":"HIGH"}'
 ```
 
-Expect HTTP **200** with this response body:
-
+**Producer logs:**
 ```text
-Sent to DEV.QUEUE.1
+[Producer] Sent: [id=d3e89a12] [from=Alice] [priority=HIGH] content='Deployment order #42'
 ```
 
-In the **consumer terminal**, look for:
-
+**Consumer logs:**
 ```text
-Received from DEV.QUEUE.1: Hello IBM MQ!
+[Consumer] Received JSON: [id=d3e89a12] [from=Alice] [priority=HIGH] content='Deployment order #42'
 ```
 
-This confirms the complete flow: HTTP request, producer, MQ queue, and consumer.
+### Option B: Send Plain Text (Backwards Compatible)
 
-## 5. See the queue in the IBM MQ web console
+```powershell
+curl.exe -i -X POST http://localhost:8081/api/messages -H "Content-Type: text/plain" -d "Hello IBM MQ!"
+```
+
+## 5. Consumer Audit & Dead Letter Queue (DLQ) APIs
+
+The `consumer-service` runs a web server on port **8082** with full audit tracking and poison-pill recovery:
+
+| Endpoint | Method | Description |
+| --- | --- | --- |
+| `http://localhost:8082/api/messages` | `GET` | List all processed messages (`?status=PROCESSED` or `?status=DEAD_LETTER`) |
+| `http://localhost:8082/api/messages/stats` | `GET` | Message statistics (total, processed, dead-lettered) |
+| `http://localhost:8082/api/messages/dlq` | `GET` | List only dead-lettered messages with error reasons |
+| `http://localhost:8082/api/messages/dlq/replay` | `POST` | Replay all messages from `Sendly.DLQ` back to `Sendly` queue |
+
+### Simulating a Poison Pill & DLQ
+
+Send a message containing `"FAIL"` to trigger retry & DLQ routing:
+
+```powershell
+curl.exe -i -X POST http://localhost:8081/api/messages `
+  -H "Content-Type: application/json" `
+  -d '{\"sender\":\"Alice\",\"content\":\"FAIL: database down\",\"priority\":\"HIGH\"}'
+```
+
+Watch the consumer logs:
+1. Message fails business validation.
+2. Consumer retries 3 times with backoff.
+3. Consumer exhausts retries and automatically routes the message to **`Sendly.DLQ`**.
+4. Check `GET http://localhost:8082/api/messages/stats` to verify DLQ count.
+5. Replay it when fixed with `POST http://localhost:8082/api/messages/dlq/replay`.
+
+## 6. See the queue in the IBM MQ web console
 
 Open **[https://localhost:9443/ibmmq/console](https://localhost:9443/ibmmq/console)**.
 
@@ -138,7 +171,7 @@ To watch a message wait in the queue:
 
 1. Stop the consumer in terminal 1 with **Ctrl+C**. Keep MQ and the producer running.
 2. Send another message using the curl command above. The producer still returns HTTP 200 because MQ can accept messages while the consumer is offline.
-3. In the console, open queue manager **QM1** and find **DEV.QUEUE.1** in its queue list.
+3. In the console, open queue manager **QM1** and find **Sendly** in its queue list.
 4. Refresh the queue list. The current depth increases by one for each message sent while the consumer is stopped. Open the queue and use its message browsing action to inspect the waiting messages.
 5. Restart the consumer using its command from step 3. Watch it log the waiting messages.
 6. Refresh the console. The queue depth should return to **0**.
@@ -149,11 +182,11 @@ With the consumer running, messages may be consumed too quickly to appear in the
 
 | Component | Configuration |
 | --- | --- |
-| Producer endpoint | `POST http://localhost:8080/api/messages`, body type `text/plain` |
+| Producer endpoint | `POST http://localhost:8081/api/messages`, body type `application/json` or `text/plain` |
 | MQ connection | `localhost(1414)` |
 | Queue manager | `QM1` |
 | Application channel | `DEV.APP.SVRCONN` |
-| Queue used by both services | `DEV.QUEUE.1` |
+| Queue used by both services | `Sendly` |
 | MQ application login | `app` / `passw0rd` |
 | Web console login | `admin` / `passw0rd` |
 

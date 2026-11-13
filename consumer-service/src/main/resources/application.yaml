@@ -2,8 +2,11 @@ spring:
   application:
     name: consumer-service
   main:
-    web-application-type: none
     banner-mode: "off"
+server:
+  port: 8082
+  error:
+    include-message: always
 ibm:
   mq:
     queueManager: QM1
@@ -12,7 +15,8 @@ ibm:
     user: app
     password: passw0rd
 app:
-  queue: DEV.QUEUE.1
+  queue: Sendly
+  dlq: Sendly.DLQ
 
 logging:
   pattern:

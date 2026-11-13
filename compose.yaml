@@ -14,6 +14,7 @@ services:
       - mqAdminPassword
     volumes:
       - mq-data:/mnt/mqm
+      - ./docker/sendly.mqsc:/etc/mqm/sendly.mqsc
     healthcheck:
       test: ["CMD", "chkmqready"]
       interval: 5s

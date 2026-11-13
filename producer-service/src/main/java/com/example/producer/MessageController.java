@@ -1,5 +1,6 @@
 package com.example.producer;
 
+import tools.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,26 +19,46 @@ public class MessageController {
 
     private final JmsTemplate jmsTemplate;
     private final String queue;
+    private final ObjectMapper objectMapper;
 
-    public MessageController(JmsTemplate jmsTemplate, @Value("${app.queue}") String queue) {
+    public MessageController(JmsTemplate jmsTemplate,
+                             @Value("${app.queue}") String queue,
+                             ObjectMapper objectMapper) {
         this.jmsTemplate = jmsTemplate;
         this.queue = queue;
+        this.objectMapper = objectMapper;
+    }
+
+    @PostMapping(value = "/api/messages", consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public AppMessage sendJson(@RequestBody AppMessage message) {
+        if (message.content() == null || message.content().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Message content must not be blank");
+        }
+        try {
+            String json = objectMapper.writeValueAsString(message);
+            jmsTemplate.convertAndSend(queue, json);
+            log.info("[Producer] Sent: [id={}] [from={}] [priority={}] content='{}'",
+                    message.id(), message.sender(), message.priority(), message.content());
+            return message;
+        } catch (JmsException exception) {
+            log.error("[Producer] Failed to send message to IBM MQ: {}", exception.getMessage());
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
+                    "Could not send message to IBM MQ", exception);
+        } catch (Exception exception) {
+            log.error("[Producer] Failed to serialize message: {}", exception.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Could not serialize message", exception);
+        }
     }
 
     @PostMapping(value = "/api/messages", consumes = MediaType.TEXT_PLAIN_VALUE,
-            produces = MediaType.TEXT_PLAIN_VALUE)
-    public String send(@RequestBody String message) {
-        if (message.isBlank()) {
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public AppMessage sendPlainText(@RequestBody String text) {
+        if (text == null || text.isBlank()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Message must not be blank");
         }
-        try {
-            jmsTemplate.convertAndSend(queue, message);
-            log.info("[Producer] Sent: {}", message.trim());
-        } catch (JmsException exception) {
-            log.error("[Producer] Failed to send message: {}", exception.getMessage());
-            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
-                    "Could not send message to IBM MQ", exception);
-        }
-        return "Sent to " + queue + "\n";
+        AppMessage message = AppMessage.of(text.trim());
+        return sendJson(message);
     }
 }

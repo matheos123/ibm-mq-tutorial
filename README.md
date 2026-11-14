@@ -126,7 +126,18 @@ curl -i -X POST http://localhost:8081/api/messages \
 curl.exe -i -X POST http://localhost:8081/api/messages -H "Content-Type: text/plain" -d "Hello IBM MQ!"
 ```
 
-## 5. Consumer Audit & Dead Letter Queue (DLQ) APIs
+## 5. Interactive Swagger / OpenAPI UI
+
+Both services feature embedded Swagger UIs:
+
+| Service | Swagger UI URL | Features |
+| --- | --- | --- |
+| **Producer Service** (Port 8081) | [http://localhost:8081/swagger-ui.html](http://localhost:8081/swagger-ui.html) | Interactive UI to publish JSON and plain text messages to `Sendly` |
+| **Consumer Service** (Port 8082) | [http://localhost:8082/swagger-ui.html](http://localhost:8082/swagger-ui.html) | Interactive UI to view audit history, statistics, DLQ messages, and trigger DLQ replay |
+
+*(For remote teammates on your network, replace `localhost` with your IP `192.168.0.105`)*
+
+## 6. Consumer Audit & Dead Letter Queue (DLQ) APIs
 
 The `consumer-service` runs a web server on port **8082** with full audit tracking and poison-pill recovery:
 
@@ -154,7 +165,7 @@ Watch the consumer logs:
 4. Check `GET http://localhost:8082/api/messages/stats` to verify DLQ count.
 5. Replay it when fixed with `POST http://localhost:8082/api/messages/dlq/replay`.
 
-## 6. See the queue in the IBM MQ web console
+## 7. See the queue in the IBM MQ web console
 
 Open **[https://localhost:9443/ibmmq/console](https://localhost:9443/ibmmq/console)**.
 

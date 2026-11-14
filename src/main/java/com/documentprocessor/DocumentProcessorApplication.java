@@ -1,14 +1,12 @@
-package com.example.consumer;
+package com.documentprocessor;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.jms.annotation.EnableJms;
 
-@EnableJms
 @SpringBootApplication
-public class ConsumerApplication {
+public class DocumentProcessorApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ConsumerApplication.class, args);
+        SpringApplication.run(DocumentProcessorApplication.class, args);
     }
 }

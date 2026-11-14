@@ -1,5 +1,42 @@
+# Compiled Build Output
+target/
 **/target/
+
+# IDE & Editor Files
 .idea/
 *.iml
 .vscode/
+.settings/
+.classpath
+.project
+.metadata
+bin/
+
+# Environment Variables & Config
+.env
+.env.*
+*.local
+
+# Security & Secrets (Private keys, Keystores, Truststores)
+*.key
+*.pem
+*.pkcs8
+*.jks
+*.p12
+*.pfx
+*.kdb
+*.sth
+*.rdb
+*.crl
+*password*.txt
+*secret*.txt
+*.cred
+
+# Log & Diagnostic Files
 *.log
+*.log.*
+mqjms.log.*
+
+# OS Generated Files
+.DS_Store
+Thumbs.db

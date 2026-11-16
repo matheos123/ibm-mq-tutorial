@@ -7,6 +7,12 @@
 * Configure Queue Manager Dead-Letter Queue (DEADQ)
 ALTER QMGR DEADQ('SYSTEM.DEAD.LETTER.QUEUE')
 
+* Configure Queue Manager SSL/TLS Key Repository and Certificate Label
+ALTER QMGR SSLKEYR('/mnt/mqm/ssl/key') CERTLABL('ibmwebspheremqdocumentqm')
+
+* Configure SVRCONN Channel with TLS CipherSpec and Mutual TLS (mTLS) Client Certificate Authentication
+ALTER CHL(DEV.APP.SVRCONN) CHLTYPE(SVRCONN) SSLCIPH('ANY_TLS12_OR_HIGHER') SSLCAUTH(REQUIRED)
+
 * Backout Queue for repeatedly failing / poison pill messages
 DEFINE QLOCAL('DOCUMENT.BACKOUT.QUEUE') REPLACE
 SET AUTHREC PROFILE('DOCUMENT.BACKOUT.QUEUE') PRINCIPAL('app') OBJTYPE(QUEUE) AUTHADD(BROWSE,GET,INQ,PUT)

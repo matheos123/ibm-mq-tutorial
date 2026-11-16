@@ -45,6 +45,12 @@ ibm:
     connName: ${MQ_CONN_NAME:localhost(1414)}
     user: ${MQ_USER:app}
     password: ${MQ_PASSWORD:passw0rd}
+    sslCipherSuite: ${MQ_SSL_CIPHER_SUITE:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256}
+    jks:
+      keyStore: ${MQ_KEYSTORE_PATH:infrastructure/certificates/client/client-keystore.p12}
+      keyStorePassword: ${MQ_KEYSTORE_PASSWORD:passw0rd}
+      trustStore: ${MQ_TRUSTSTORE_PATH:infrastructure/certificates/client/client-truststore.p12}
+      trustStorePassword: ${MQ_TRUSTSTORE_PASSWORD:passw0rd}
     pool:
       enabled: true
       max-connections: 10

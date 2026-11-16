@@ -1,10 +1,23 @@
+* ==============================================================================
+* IBM MQ Queue Manager and Application Queue Definitions
+* Queue Manager: DOCUMENT.QM
+* Dead Letter Queue: SYSTEM.DEAD.LETTER.QUEUE
+* ==============================================================================
+
+* Configure Queue Manager Dead-Letter Queue (DEADQ)
+ALTER QMGR DEADQ('SYSTEM.DEAD.LETTER.QUEUE')
+
+* Backout Queue for repeatedly failing / poison pill messages
 DEFINE QLOCAL('DOCUMENT.BACKOUT.QUEUE') REPLACE
 SET AUTHREC PROFILE('DOCUMENT.BACKOUT.QUEUE') PRINCIPAL('app') OBJTYPE(QUEUE) AUTHADD(BROWSE,GET,INQ,PUT)
 
+* Success Queue for publishing completion notifications
 DEFINE QLOCAL('DOCUMENT.SUCCESS.QUEUE') REPLACE
 SET AUTHREC PROFILE('DOCUMENT.SUCCESS.QUEUE') PRINCIPAL('app') OBJTYPE(QUEUE) AUTHADD(BROWSE,GET,INQ,PUT)
 
+* Primary Request Queue with Backout Threshold (BOTHRESH=3) and Backout Queue Name (BOQNAME)
 DEFINE QLOCAL('DOCUMENT.REQUEST.QUEUE') REPLACE BOTHRESH(3) BOQNAME('DOCUMENT.BACKOUT.QUEUE')
 SET AUTHREC PROFILE('DOCUMENT.REQUEST.QUEUE') PRINCIPAL('app') OBJTYPE(QUEUE) AUTHADD(BROWSE,GET,INQ,PUT)
 
+* Permissions for Dead Letter Queue
 SET AUTHREC PROFILE('SYSTEM.DEAD.LETTER.QUEUE') PRINCIPAL('app') OBJTYPE(QUEUE) AUTHADD(BROWSE,GET,INQ,PUT)

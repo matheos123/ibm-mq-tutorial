@@ -3,7 +3,7 @@ services:
     image: icr.io/ibm-messaging/mq:9.4.0.5-r2
     environment:
       LICENSE: accept
-      MQ_QMGR_NAME: QM1
+      MQ_QMGR_NAME: DOCUMENT.QM
       MQ_DEV: "true"
       MQ_ENABLE_EMBEDDED_WEB_SERVER: "true"
     ports:
@@ -14,7 +14,7 @@ services:
       - mqAdminPassword
     volumes:
       - mq-data:/mnt/mqm
-      - ./docker/sendly.mqsc:/etc/mqm/sendly.mqsc
+      - ./docker/document.mqsc:/etc/mqm/document.mqsc
     healthcheck:
       test: ["CMD", "chkmqready"]
       interval: 5s
